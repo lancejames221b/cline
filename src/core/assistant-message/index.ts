@@ -36,6 +36,8 @@ export const toolParamNames = [
 	"text",
 	"question",
 	"result",
+	"require_confirmation", // For CRUD operations
+	"auto_test" // For automated browser testing
 ] as const
 
 export type ToolParamName = (typeof toolParamNames)[number]
@@ -51,17 +53,17 @@ export interface ToolUse {
 export interface ExecuteCommandToolUse extends ToolUse {
 	name: "execute_command"
 	// Pick<Record<ToolParamName, string>, "command"> makes "command" required, but Partial<> makes it optional
-	params: Partial<Pick<Record<ToolParamName, string>, "command">>
+	params: Partial<Pick<Record<ToolParamName, string>, "command" | "require_confirmation">>
 }
 
 export interface ReadFileToolUse extends ToolUse {
 	name: "read_file"
-	params: Partial<Pick<Record<ToolParamName, string>, "path">>
+	params: Partial<Pick<Record<ToolParamName, string>, "path" | "require_confirmation">>
 }
 
 export interface WriteToFileToolUse extends ToolUse {
 	name: "write_to_file"
-	params: Partial<Pick<Record<ToolParamName, string>, "path" | "content">>
+	params: Partial<Pick<Record<ToolParamName, string>, "path" | "content" | "require_confirmation">>
 }
 
 export interface SearchFilesToolUse extends ToolUse {
@@ -81,7 +83,7 @@ export interface ListCodeDefinitionNamesToolUse extends ToolUse {
 
 export interface BrowserActionToolUse extends ToolUse {
 	name: "browser_action"
-	params: Partial<Pick<Record<ToolParamName, string>, "action" | "url" | "coordinate" | "text">>
+	params: Partial<Pick<Record<ToolParamName, string>, "action" | "url" | "coordinate" | "text" | "auto_test">>
 }
 
 export interface AskFollowupQuestionToolUse extends ToolUse {
